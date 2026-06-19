@@ -42,7 +42,7 @@ const PLANS = [
     originalUnico: "Gs. 3.450.000",
     originalMensual: "Gs. 375.000/mes",
     features: [
-      "Todo lo del Plan Básico",
+      "Plan Basico Completo",
       "Panel de Administración",
       "Gestión de contenido",
       "Gestión de productos",
@@ -62,7 +62,7 @@ const PLANS = [
     originalUnico: "Gs. 6.750.000",
     originalMensual: "Gs. 675.000/mes",
     features: [
-      "Todo lo del Plan Profesional",
+      "Plan Profesional Completo",
       "Sistema a medida",
       "Control de stock",
       "Ventas",
