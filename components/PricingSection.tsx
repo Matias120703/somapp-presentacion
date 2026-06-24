@@ -7,6 +7,7 @@ const WA_PRICING_URL =
   "https://wa.me/595981698777?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20planes%20web%20de%20Somapp.";
 
 type Mode = "unico" | "mensual";
+type Currency = "PYG" | "USD";
 
 /* ═══════════════════════════════════════════════════════════════════
    Data
@@ -18,10 +19,16 @@ const PLANS = [
     featured: false,
     badge: null as string | null,
     title: "Landing Page Profesional",
-    priceUnico: "Gs. 1.000.000",
-    priceMensual: "Gs. 180.000/mes",
-    originalUnico: "Gs. 1.500.000",
-    originalMensual: "Gs. 270.000/mes",
+    prices: {
+      PYG: {
+        unico: { current: "Gs. 1.000.000", original: "Gs. 1.500.000" },
+        mensual: { current: "Gs. 180.000/mes", original: "Gs. 270.000/mes" },
+      },
+      USD: {
+        unico: { current: "USD 160", original: "USD 240" },
+        mensual: { current: "USD 29.25/mes", original: "USD 43.88/mes" },
+      },
+    },
     features: [
       "Diseño premium",
       "Responsive",
@@ -37,10 +44,16 @@ const PLANS = [
     featured: true,
     badge: "Más Elegido" as string | null,
     title: "Página Web + Panel Administrativo",
-    priceUnico: "Gs. 2.300.000",
-    priceMensual: "Gs. 250.000/mes",
-    originalUnico: "Gs. 3.450.000",
-    originalMensual: "Gs. 375.000/mes",
+    prices: {
+      PYG: {
+        unico: { current: "Gs. 2.300.000", original: "Gs. 3.450.000" },
+        mensual: { current: "Gs. 250.000/mes", original: "Gs. 375.000/mes" },
+      },
+      USD: {
+        unico: { current: "USD 376.69", original: "USD 565.04" },
+        mensual: { current: "USD 40.94/mes", original: "USD 61.41/mes" },
+      },
+    },
     features: [
       "Plan Basico Completo",
       "Panel de Administración",
@@ -57,10 +70,16 @@ const PLANS = [
     featured: false,
     badge: null as string | null,
     title: "Sistema Empresarial Personalizado",
-    priceUnico: "Desde Gs. 4.500.000",
-    priceMensual: "Gs. 450.000/mes",
-    originalUnico: "Gs. 6.750.000",
-    originalMensual: "Gs. 675.000/mes",
+    prices: {
+      PYG: {
+        unico: { current: "Desde Gs. 4.500.000", original: "Gs. 6.750.000" },
+        mensual: { current: "Gs. 450.000/mes", original: "Gs. 675.000/mes" },
+      },
+      USD: {
+        unico: { current: "Desde USD 737", original: "USD 1105.50" },
+        mensual: { current: "USD 73.70/mes", original: "USD 110.55/mes" },
+      },
+    },
     features: [
       "Plan Profesional Completo",
       "Sistema a medida",
@@ -84,6 +103,11 @@ const NOTES: Record<Mode, string> = {
 
 const DISCLAIMER =
   "Los precios publicados corresponden a planes base. El costo final puede variar según las funcionalidades y requerimientos específicos de cada proyecto.";
+
+const DOMAIN_DISCLAIMER =
+  "Los precios publicados no incluyen la compra del dominio. El dominio personalizado (ejemplo: empresa.com, empresa.com.py, empresa.dev) se adquiere por separado y su costo depende de la disponibilidad y extensión elegida.";
+
+const DOMAIN_EXAMPLES = ["mipagina.com", "miempresa.com.py", "misistema.dev"];
 
 /* ═══════════════════════════════════════════════════════════════════
    Animation variants
@@ -165,6 +189,57 @@ function PricingToggle({ mode, setMode }: { mode: Mode; setMode: (m: Mode) => vo
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   Currency toggle
+═══════════════════════════════════════════════════════════════════ */
+function CurrencyToggle({
+  currency,
+  setCurrency,
+}: {
+  currency: Currency;
+  setCurrency: (c: Currency) => void;
+}) {
+  return (
+    <div
+      className="inline-flex items-center rounded-xl p-1"
+      style={{
+        background: "rgba(11,19,32,.88)",
+        border: "1px solid rgba(255,255,255,.08)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+      }}
+    >
+      {(["PYG", "USD"] as Currency[]).map((c) => (
+        <button
+          key={c}
+          onClick={() => setCurrency(c)}
+          className="relative px-5 py-2 text-[13px] font-semibold rounded-lg
+            transition-colors duration-200 whitespace-nowrap"
+          style={{ color: currency === c ? "white" : "rgba(255,255,255,.38)" }}
+        >
+          {currency === c && (
+            <motion.div
+              layoutId="currency-pill"
+              className="absolute inset-0 rounded-lg"
+              style={{
+                background:
+                  "linear-gradient(130deg, rgba(0,191,255,.22) 0%, rgba(0,123,255,.18) 100%)",
+                border: "1px solid rgba(0,191,255,.38)",
+                boxShadow: "0 0 16px rgba(0,191,255,.14)",
+              }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            />
+          )}
+          <span className="relative z-10 inline-flex items-center gap-1.5">
+            <span className="text-[14px] leading-none">{c === "PYG" ? "🇵🇾" : "🇺🇸"}</span>
+            {c === "PYG" ? "Guaraníes" : "USD"}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    Animated price display — original crossed out + current prominent
 ═══════════════════════════════════════════════════════════════════ */
 function PriceDisplay({
@@ -229,9 +304,16 @@ function PriceDisplay({
 /* ═══════════════════════════════════════════════════════════════════
    Featured card (Profesional)
 ═══════════════════════════════════════════════════════════════════ */
-function FeaturedCard({ plan, mode }: { plan: (typeof PLANS)[number]; mode: Mode }) {
-  const price         = mode === "unico" ? plan.priceUnico    : plan.priceMensual;
-  const originalPrice = mode === "unico" ? plan.originalUnico : plan.originalMensual;
+function FeaturedCard({
+  plan,
+  mode,
+  currency,
+}: {
+  plan: (typeof PLANS)[number];
+  mode: Mode;
+  currency: Currency;
+}) {
+  const { current: price, original: originalPrice } = plan.prices[currency][mode];
 
   return (
     <div className="relative">
@@ -354,9 +436,16 @@ function FeaturedCard({ plan, mode }: { plan: (typeof PLANS)[number]; mode: Mode
 /* ═══════════════════════════════════════════════════════════════════
    Standard card (Básico / Premium)
 ═══════════════════════════════════════════════════════════════════ */
-function StandardCard({ plan, mode }: { plan: (typeof PLANS)[number]; mode: Mode }) {
-  const price         = mode === "unico" ? plan.priceUnico    : plan.priceMensual;
-  const originalPrice = mode === "unico" ? plan.originalUnico : plan.originalMensual;
+function StandardCard({
+  plan,
+  mode,
+  currency,
+}: {
+  plan: (typeof PLANS)[number];
+  mode: Mode;
+  currency: Currency;
+}) {
+  const { current: price, original: originalPrice } = plan.prices[currency][mode];
 
   return (
     <motion.div
@@ -431,6 +520,7 @@ function StandardCard({ plan, mode }: { plan: (typeof PLANS)[number]; mode: Mode
 ═══════════════════════════════════════════════════════════════════ */
 export default function PricingSection() {
   const [mode, setMode] = useState<Mode>("unico");
+  const [currency, setCurrency] = useState<Currency>("PYG");
 
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef  = useRef<HTMLDivElement>(null);
@@ -524,8 +614,13 @@ export default function PricingSection() {
           </motion.div>
 
           {/* Payment mode toggle */}
-          <motion.div variants={fadeUp} className="flex justify-center">
+          <motion.div variants={fadeUp} className="flex justify-center mb-3">
             <PricingToggle mode={mode} setMode={setMode} />
+          </motion.div>
+
+          {/* Currency toggle */}
+          <motion.div variants={fadeUp} className="flex justify-center">
+            <CurrencyToggle currency={currency} setCurrency={setCurrency} />
           </motion.div>
         </motion.div>
 
@@ -540,9 +635,9 @@ export default function PricingSection() {
           {PLANS.map((plan) => (
             <motion.div key={plan.id} variants={fadeUp} className="h-full">
               {plan.featured ? (
-                <FeaturedCard plan={plan} mode={mode} />
+                <FeaturedCard plan={plan} mode={mode} currency={currency} />
               ) : (
-                <StandardCard plan={plan} mode={mode} />
+                <StandardCard plan={plan} mode={mode} currency={currency} />
               )}
             </motion.div>
           ))}
@@ -580,9 +675,39 @@ export default function PricingSection() {
           </AnimatePresence>
 
           {/* Disclaimer */}
-          <p className="text-white/28 text-[12.5px] leading-relaxed max-w-2xl mx-auto mb-8">
+          <p className="text-white/28 text-[12.5px] leading-relaxed max-w-2xl mx-auto mb-5">
             {DISCLAIMER}
           </p>
+
+          {/* Domain disclaimer */}
+          <div className="max-w-2xl mx-auto mb-8 flex flex-col items-center gap-2">
+            <div className="flex items-start sm:items-center gap-2 text-left sm:text-center">
+              <span className="text-[13px] leading-none mt-px sm:mt-0 opacity-60 flex-shrink-0">🌐</span>
+              <p className="text-white/26 text-[11.5px] leading-relaxed">
+                {DOMAIN_DISCLAIMER}
+              </p>
+            </div>
+
+            <p className="text-white/18 text-[11px] leading-relaxed flex flex-wrap justify-center gap-x-1.5">
+              <span>Ejemplos de dominios:</span>
+              {DOMAIN_EXAMPLES.map((d, i) => (
+                <span key={d} className="text-white/30">
+                  {d}{i < DOMAIN_EXAMPLES.length - 1 && " ·"}
+                </span>
+              ))}
+            </p>
+
+            <span
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full
+                text-[10px] font-medium text-white/35 mt-1"
+              style={{
+                background: "rgba(255,255,255,.03)",
+                border: "1px solid rgba(255,255,255,.08)",
+              }}
+            >
+              🌐 Dominio personalizado no incluido en los planes
+            </span>
+          </div>
 
           <motion.a
             href={WA_PRICING_URL}
