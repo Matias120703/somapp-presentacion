@@ -34,7 +34,7 @@ const PLANS = [
       "Responsive",
       "WhatsApp integrado",
       "Formulario de contacto",
-      "Hosting por 12 meses",
+      "Hosting por 6 meses",
       "SEO básico",
     ],
   },
@@ -96,7 +96,7 @@ const PLANS = [
 
 const NOTES: Record<Mode, string> = {
   unico:
-    "Los planes de pago único incluyen 12 meses de hosting y soporte. Luego de ese período el cliente puede renovar el servicio de mantenimiento.",
+    "Los planes de pago único incluyen 6 meses de hosting y soporte. Luego de ese período el cliente puede renovar el servicio de mantenimiento.",
   mensual:
     "Los planes mensuales incluyen desarrollo, hosting, mantenimiento, soporte y actualizaciones.",
 };
