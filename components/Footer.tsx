@@ -266,7 +266,7 @@ export default function Footer() {
               <SocialBtn href="https://wa.me/595981698777" label="WhatsApp">
                 <IconWhatsApp />
               </SocialBtn>
-              <SocialBtn href="https://www.instagram.com/matt_clipps/reels/" label="Instagram">
+              <SocialBtn href="https://www.instagram.com/somapp043/" label="Instagram">
                 <IconInstagram />
               </SocialBtn>
               <SocialBtn href="https://www.facebook.com/profile.php?id=61558303434109&locale=es_LA" label="Facebook">
