@@ -6,7 +6,6 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 const WA_PRICING_URL =
   "https://wa.me/595981698777?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20planes%20web%20de%20Somapp.";
 
-type Mode = "unico" | "mensual";
 type Currency = "PYG" | "USD";
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -20,14 +19,8 @@ const PLANS = [
     badge: null as string | null,
     title: "Landing Page Profesional",
     prices: {
-      PYG: {
-        unico: "Gs. 1.000.000",
-        mensual: "Gs. 180.000/mes",
-      },
-      USD: {
-        unico: "USD 160",
-        mensual: "USD 29.25/mes",
-      },
+      PYG: "Desde Gs. 650.000",
+      USD: "Desde USD 107",
     },
     features: [
       "Diseño premium",
@@ -45,69 +38,23 @@ const PLANS = [
     badge: "Más Elegido" as string | null,
     title: "Página Web + Panel Administrativo",
     prices: {
-      PYG: {
-        unico: "Gs. 2.300.000",
-        mensual: "Gs. 250.000/mes",
-      },
-      USD: {
-        unico: "USD 376.69",
-        mensual: "USD 40.94/mes",
-      },
+      PYG: "Desde Gs. 1.990.000",
+      USD: "Desde USD 326",
     },
     features: [
       "Plan Básico completo",
       "Panel de Administración",
-      "Gestión de contenido",
-      "Gestión de productos",
+      "Gestión de contenido y productos",
       "Dashboard profesional",
       "Base de datos",
       "Usuarios y permisos",
     ],
   },
-  {
-    id: "premium",
-    name: "Premium",
-    featured: false,
-    badge: null as string | null,
-    title: "Sistema Empresarial Personalizado",
-    prices: {
-      PYG: {
-        unico: "Desde Gs. 4.500.000",
-        mensual: "Gs. 450.000/mes",
-      },
-      USD: {
-        unico: "Desde USD 737",
-        mensual: "USD 73.70/mes",
-      },
-    },
-    features: [
-      "Plan Profesional completo",
-      "Sistema a medida",
-      "Control de stock",
-      "Ventas",
-      "Compras",
-      "Clientes",
-      "Reportes",
-      "Caja",
-      "Automatizaciones",
-    ],
-  },
 ];
 
-const NOTES: Record<Mode, string> = {
-  unico:
-    "Los planes de pago único incluyen 6 meses de hosting y soporte. Luego de ese período el cliente puede renovar el servicio de mantenimiento.",
-  mensual:
-    "Los planes mensuales incluyen desarrollo, hosting, mantenimiento, soporte y actualizaciones.",
-};
-
-const DISCLAIMER =
-  "Los precios publicados corresponden a planes base. El costo final puede variar según las funcionalidades y requerimientos específicos de cada proyecto.";
-
-const DOMAIN_DISCLAIMER =
-  "Los precios publicados no incluyen la compra del dominio. El dominio personalizado (ejemplo: empresa.com, empresa.com.py, empresa.dev) se adquiere por separado y su costo depende de la disponibilidad y extensión elegida.";
-
-const DOMAIN_EXAMPLES = ["mipagina.com", "miempresa.com.py", "misistema.dev"];
+const NOTE =
+  "Precios base: el costo final se ajusta según las funcionalidades que necesite tu proyecto. " +
+  "Incluye hosting y soporte por 6 meses. Dominio personalizado no incluido.";
 
 /* ═══════════════════════════════════════════════════════════════════
    Animation variants
@@ -145,49 +92,6 @@ function ArrowRight() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   Toggle
-═══════════════════════════════════════════════════════════════════ */
-function PricingToggle({ mode, setMode }: { mode: Mode; setMode: (m: Mode) => void }) {
-  return (
-    <div
-      className="inline-flex items-center rounded-xl p-1"
-      style={{
-        background: "rgba(11,19,32,.88)",
-        border: "1px solid rgba(255,255,255,.08)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-      }}
-    >
-      {(["unico", "mensual"] as Mode[]).map((m) => (
-        <button
-          key={m}
-          onClick={() => setMode(m)}
-          className="relative px-6 py-2.5 text-[13.5px] font-semibold rounded-lg
-            transition-colors duration-200 whitespace-nowrap"
-          style={{ color: mode === m ? "white" : "rgba(255,255,255,.38)" }}
-        >
-          {mode === m && (
-            <motion.div
-              layoutId="pricing-pill"
-              className="absolute inset-0 rounded-lg"
-              style={{
-                background:
-                  "linear-gradient(130deg, rgba(47,125,246,.24) 0%, rgba(25,85,216,.2) 100%)",
-                border: "1px solid rgba(47,125,246,.4)",
-              }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            />
-          )}
-          <span className="relative z-10">
-            {m === "unico" ? "Pago Único" : "Pago Mensual"}
-          </span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
    Currency toggle
 ═══════════════════════════════════════════════════════════════════ */
 function CurrencyToggle({
@@ -203,8 +107,6 @@ function CurrencyToggle({
       style={{
         background: "rgba(11,19,32,.88)",
         border: "1px solid rgba(255,255,255,.08)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
       }}
     >
       {(["PYG", "USD"] as Currency[]).map((c) => (
@@ -240,13 +142,7 @@ function CurrencyToggle({
 /* ═══════════════════════════════════════════════════════════════════
    Price display
 ═══════════════════════════════════════════════════════════════════ */
-function PriceDisplay({
-  price,
-  featured,
-}: {
-  price: string;
-  featured: boolean;
-}) {
+function PriceDisplay({ price, featured }: { price: string; featured: boolean }) {
   const hasDesde = price.startsWith("Desde ");
   const numPart  = hasDesde ? price.slice(6) : price;
 
@@ -285,14 +181,12 @@ function PriceDisplay({
 ═══════════════════════════════════════════════════════════════════ */
 function FeaturedCard({
   plan,
-  mode,
   currency,
 }: {
   plan: (typeof PLANS)[number];
-  mode: Mode;
   currency: Currency;
 }) {
-  const price = plan.prices[currency][mode];
+  const price = plan.prices[currency];
 
   return (
     <div className="relative">
@@ -307,24 +201,19 @@ function FeaturedCard({
         </div>
       )}
 
-      {/* Card */}
       <motion.div
         className="relative rounded-2xl overflow-hidden flex flex-col px-8 pt-11 pb-9 border"
         style={{
           background: "linear-gradient(155deg, #0e1c30 0%, #0a1220 60%, #080e1a 100%)",
           borderColor: "rgba(47,125,246,.35)",
+          boxShadow: "0 16px 50px rgba(0,0,0,.35)",
         }}
         whileHover={{ y: -4 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        initial={{ boxShadow: "0 16px 50px rgba(0,0,0,.35)" }}
-        whileInView={{ boxShadow: "0 16px 50px rgba(0,0,0,.35)" }}
       >
-        {/* Top accent line */}
         <div
           className="absolute inset-x-0 top-0 h-[2px]"
-          style={{
-            background: "linear-gradient(90deg, #2F7DF6, #1955D8)",
-          }}
+          style={{ background: "linear-gradient(90deg, #2F7DF6, #1955D8)" }}
         />
 
         <span
@@ -342,10 +231,7 @@ function FeaturedCard({
 
         <div
           className="h-px mb-6"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(47,125,246,.28), transparent)",
-          }}
+          style={{ background: "linear-gradient(90deg, transparent, rgba(47,125,246,.28), transparent)" }}
         />
 
         <ul className="flex flex-col gap-3 mb-8 flex-1">
@@ -375,26 +261,22 @@ function FeaturedCard({
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   Standard card (Básico / Premium)
+   Standard card (Básico)
 ═══════════════════════════════════════════════════════════════════ */
 function StandardCard({
   plan,
-  mode,
   currency,
 }: {
   plan: (typeof PLANS)[number];
-  mode: Mode;
   currency: Currency;
 }) {
-  const price = plan.prices[currency][mode];
+  const price = plan.prices[currency];
 
   return (
     <motion.div
       className="relative rounded-2xl overflow-hidden flex flex-col px-7 py-9 h-full"
       style={{
         background: "rgba(11,19,32,.65)",
-        backdropFilter: "blur(22px)",
-        WebkitBackdropFilter: "blur(22px)",
         borderWidth: "1px",
         borderStyle: "solid",
         borderColor: "rgba(255,255,255,.07)",
@@ -446,7 +328,6 @@ function StandardCard({
    Section
 ═══════════════════════════════════════════════════════════════════ */
 export default function PricingSection() {
-  const [mode, setMode] = useState<Mode>("unico");
   const [currency, setCurrency] = useState<Currency>("PYG");
 
   const headerRef = useRef<HTMLDivElement>(null);
@@ -471,23 +352,10 @@ export default function PricingSection() {
     >
       <div className="noise" />
 
-      {/* Section top border */}
       <div className="absolute inset-x-0 top-0 h-px
         bg-gradient-to-r from-transparent via-white/[.07] to-transparent" />
 
-      {/* Subtle grid texture */}
-      <div className="absolute inset-0 pointer-events-none opacity-[.018] overflow-hidden">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="price-grid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#2F7DF6" strokeWidth=".5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#price-grid)" />
-        </svg>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
 
         {/* ── Header ── */}
         <motion.div
@@ -503,7 +371,7 @@ export default function PricingSection() {
               text-brand-blue text-[11px] font-semibold tracking-[.18em] uppercase"
           >
             <span className="w-[5px] h-[5px] rounded-full bg-brand-blue" />
-            Planes 
+            Planes
           </motion.span>
 
           <motion.h2 variants={fadeUp}
@@ -519,12 +387,6 @@ export default function PricingSection() {
             Precios claros en guaraníes o dólares, sin letra chica.
           </motion.p>
 
-          {/* Payment mode toggle */}
-          <motion.div variants={fadeUp} className="flex justify-center mb-3">
-            <PricingToggle mode={mode} setMode={setMode} />
-          </motion.div>
-
-          {/* Currency toggle */}
           <motion.div variants={fadeUp} className="flex justify-center">
             <CurrencyToggle currency={currency} setCurrency={setCurrency} />
           </motion.div>
@@ -536,20 +398,20 @@ export default function PricingSection() {
           variants={stagger}
           initial="hidden"
           animate={cardsInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:items-end pt-8"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:items-end pt-8"
         >
           {PLANS.map((plan) => (
             <motion.div key={plan.id} variants={fadeUp} className="h-full">
               {plan.featured ? (
-                <FeaturedCard plan={plan} mode={mode} currency={currency} />
+                <FeaturedCard plan={plan} currency={currency} />
               ) : (
-                <StandardCard plan={plan} mode={mode} currency={currency} />
+                <StandardCard plan={plan} currency={currency} />
               )}
             </motion.div>
           ))}
         </motion.div>
 
-        {/* ── Notes + disclaimer + CTA ── */}
+        {/* ── Note + CTA ── */}
         <motion.div
           ref={noteRef}
           initial={{ opacity: 0, y: 20 }}
@@ -557,63 +419,14 @@ export default function PricingSection() {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="mt-14 text-center"
         >
-          {/* Divider */}
           <div
-            className="h-px mb-10 max-w-xs mx-auto"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(255,255,255,.09), transparent)",
-            }}
+            className="h-px mb-8 max-w-xs mx-auto"
+            style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,.09), transparent)" }}
           />
 
-          {/* Mode-specific note — animates on toggle */}
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={mode}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className="text-white/52 text-[14px] leading-relaxed max-w-2xl mx-auto mb-4"
-            >
-              {NOTES[mode]}
-            </motion.p>
-          </AnimatePresence>
-
-          {/* Disclaimer */}
-          <p className="text-white/28 text-[12.5px] leading-relaxed max-w-2xl mx-auto mb-5">
-            {DISCLAIMER}
+          <p className="text-white/45 text-[13.5px] leading-relaxed max-w-xl mx-auto mb-8">
+            {NOTE}
           </p>
-
-          {/* Domain disclaimer */}
-          <div className="max-w-2xl mx-auto mb-8 flex flex-col items-center gap-2">
-            <div className="flex items-start sm:items-center gap-2 text-left sm:text-center">
-              <span className="text-[13px] leading-none mt-px sm:mt-0 opacity-60 flex-shrink-0">🌐</span>
-              <p className="text-white/26 text-[11.5px] leading-relaxed">
-                {DOMAIN_DISCLAIMER}
-              </p>
-            </div>
-
-            <p className="text-white/18 text-[11px] leading-relaxed flex flex-wrap justify-center gap-x-1.5">
-              <span>Ejemplos de dominios:</span>
-              {DOMAIN_EXAMPLES.map((d, i) => (
-                <span key={d} className="text-white/30">
-                  {d}{i < DOMAIN_EXAMPLES.length - 1 && " ·"}
-                </span>
-              ))}
-            </p>
-
-            <span
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full
-                text-[10px] font-medium text-white/35 mt-1"
-              style={{
-                background: "rgba(255,255,255,.03)",
-                border: "1px solid rgba(255,255,255,.08)",
-              }}
-            >
-              🌐 Dominio personalizado no incluido en los planes
-            </span>
-          </div>
 
           <motion.a
             href={WA_PRICING_URL}
