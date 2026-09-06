@@ -20,7 +20,7 @@ const PLANS = [
     title: "Landing Page Profesional",
     prices: {
       PYG: "Desde Gs. 650.000",
-      USD: "Desde USD 107",
+      USD: "Desde USD 115",
     },
     features: [
       "Diseño premium",
@@ -39,7 +39,7 @@ const PLANS = [
     title: "Página Web + Panel Administrativo",
     prices: {
       PYG: "Desde Gs. 1.990.000",
-      USD: "Desde USD 326",
+      USD: "Desde USD 345",
     },
     features: [
       "Plan Básico completo",
