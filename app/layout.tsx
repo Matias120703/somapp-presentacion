@@ -1,11 +1,26 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  axes: ["opsz", "SOFT"],
+  weight: "variable",
+});
+
 /* ─── Viewport ─────────────────────────────────────────────────────── */
 export const viewport: Viewport = {
-  themeColor: "#050B14",
-  colorScheme: "dark",
+  themeColor: "#F6F4EF",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -15,22 +30,19 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://somapp.com.py"),
 
   title: {
-    default: "SOMAPP — Soluciones Digitales | Sistemas, Páginas Web y Apps",
+    default: "SOMAPP — Páginas web y sistemas a medida en Paraguay",
     template: "%s | SOMAPP",
   },
   description:
-    "Desarrollamos sistemas de gestión, páginas web profesionales y aplicaciones móviles a medida para empresas y emprendedores en Paraguay. Tecnología moderna para impulsar tu negocio.",
+    "Estudio de desarrollo en Paraguay. Diseñamos y desarrollamos páginas web, tiendas online y sistemas de gestión a medida, con hosting y soporte incluidos.",
   keywords: [
-    "soluciones digitales Paraguay",
     "desarrollo web Paraguay",
-    "sistemas de gestión empresarial",
-    "aplicaciones móviles a medida",
     "páginas web profesionales",
-    "software empresarial",
-    "automatización de procesos",
+    "sistemas de gestión empresarial",
+    "tienda online Paraguay",
+    "sistema de reservas",
+    "software a medida",
     "SOMAPP",
-    "emprendedores Paraguay",
-    "e-commerce Paraguay",
   ],
   authors:   [{ name: "SOMAPP", url: "https://somapp.com.py" }],
   creator:   "SOMAPP",
@@ -41,24 +53,17 @@ export const metadata: Metadata = {
     locale:      "es_PY",
     url:         "https://somapp.com.py",
     siteName:    "SOMAPP",
-    title:       "SOMAPP — Soluciones Digitales",
+    title:       "SOMAPP — Páginas web y sistemas a medida",
     description:
-      "Desarrollamos sistemas de gestión, páginas web profesionales y aplicaciones móviles a medida para empresas y emprendedores en Paraguay.",
-    images: [
-      {
-        url:    "/og-image.png",
-        width:  1200,
-        height: 630,
-        alt:    "SOMAPP — Soluciones Digitales",
-      },
-    ],
+      "Diseñamos y desarrollamos páginas web, tiendas online y sistemas de gestión a medida para negocios en Paraguay.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "SOMAPP" }],
   },
 
   twitter: {
     card:        "summary_large_image",
-    title:       "SOMAPP — Soluciones Digitales",
+    title:       "SOMAPP — Páginas web y sistemas a medida",
     description:
-      "Desarrollamos sistemas de gestión, páginas web y aplicaciones móviles a medida para empresas y emprendedores en Paraguay.",
+      "Diseñamos y desarrollamos páginas web, tiendas online y sistemas de gestión a medida para negocios en Paraguay.",
     images: ["/og-image.png"],
   },
 
@@ -80,7 +85,7 @@ export const metadata: Metadata = {
 /* ─── Layout ─────────────────────────────────────────────────────── */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" className={`${inter.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <body>
         {children}
         <WhatsAppButton />

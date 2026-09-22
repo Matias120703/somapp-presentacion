@@ -1,181 +1,132 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import HeroLogoShowcase from "./HeroLogoShowcase";
+import { FortalezaMockup } from "./ProjectMockups";
+import { WA_URL } from "@/lib/whatsapp";
+
+const FACTS = [
+  "+50 proyectos entregados",
+  "Atención directa por WhatsApp",
+  "Hosting y soporte incluidos",
+  "Precios en Gs. y USD",
+];
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function HeroSection() {
-  /* introComplete: logo is fully assembled */
-  const [introComplete, setIntroComplete] = useState(false);
-  /* contentVisible: left column fades in */
-  const [contentVisible, setContentVisible] = useState(false);
-
-  useEffect(() => {
-    // Logo draws ≈ 2.2 s (last path delay 1.1 + duration 1.1 = 2.2 s)
-    const t1 = setTimeout(() => setIntroComplete(true), 2300);
-    const t2 = setTimeout(() => setContentVisible(true), 2600);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, []);
-
   return (
-    <section
-      id="inicio"
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{
-        background: [
-          "radial-gradient(ellipse 80% 60% at 65% 45%, rgba(25,85,216,.07) 0%, transparent 60%)",
-          "radial-gradient(ellipse 60% 80% at 10% 80%, rgba(25,85,216,.04) 0%, transparent 55%)",
-          "#050B14",
-        ].join(", "),
-      }}
-    >
-      {/* Noise grain */}
-      <div className="noise" />
+    <section id="inicio" className="relative pt-[72px]">
+      <div className="mx-auto max-w-site px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end pt-16 sm:pt-24 pb-14 sm:pb-20">
 
-      {/* Grid */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[.03]">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
-              <path d="M 56 0 L 0 0 0 56" fill="none" stroke="#2F7DF6" strokeWidth=".5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
-
-      {/* ── Two-column layout ── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-[68px]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-6 items-center min-h-[calc(100vh-68px)] pt-16 pb-10">
-
-          {/* ── LEFT — copy ── */}
-          <motion.div
-            className="flex flex-col gap-7 order-2 lg:order-1"
-            initial={{ opacity: 0, x: -32 }}
-            animate={contentVisible ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: .85, ease: [.22, 1, .36, 1] }}
-          >
-            {/* Status badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={contentVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: .05, duration: .55 }}
-            >
-              <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full
-                border border-brand-blue/25 bg-brand-blue/[.06]
-                text-brand-blue text-[11px] font-semibold tracking-[.18em] uppercase"
-              >
-                <span className="w-[6px] h-[6px] rounded-full bg-brand-blue" />
-                Desarrollo de Software
-              </span>
-            </motion.div>
-
-            {/* Headline */}
-            <motion.h1
-              className="text-[2.6rem] sm:text-5xl xl:text-[3.6rem] font-black leading-[1.07] tracking-[-0.02em] text-white"
-              initial={{ opacity: 0, y: 22 }}
-              animate={contentVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: .15, duration: .8 }}
-            >
-              Sistemas y sitios web{" "}
-              <span className="gradient-text">
-                hechos a medida
-              </span>{" "}
-              para tu empresa
-            </motion.h1>
-
-            {/* Description */}
+          {/* ── Copy ── */}
+          <div className="lg:col-span-7">
             <motion.p
-              className="text-[1.05rem] text-white/55 leading-relaxed max-w-[480px]"
-              initial={{ opacity: 0, y: 18 }}
-              animate={contentVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: .28, duration: .75 }}
+              className="eyebrow mb-6"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease }}
             >
-              Diseñamos y desarrollamos páginas web, tiendas online y sistemas
-              de gestión, con entrega, hosting y soporte incluidos desde el
-              primer día.
+              Estudio de desarrollo web y sistemas · Paraguay
             </motion.p>
 
-            {/* CTA buttons */}
-            <motion.div
-              className="flex flex-wrap gap-3.5 pt-1"
+            <motion.h1
+              className="font-display font-medium text-ink text-[2.7rem] leading-[1.04] sm:text-[3.6rem] lg:text-[4.2rem]"
               initial={{ opacity: 0, y: 18 }}
-              animate={contentVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: .4, duration: .75 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.08, ease }}
             >
-              <motion.a
-                href="#planes"
-                className="btn-primary inline-flex items-center gap-2.5 text-white font-semibold
-                  text-[15px] px-7 py-[13px] rounded-xl"
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: .97 }}
-              >
-                <BoltIcon />
-                Ver planes
-              </motion.a>
+              Sitios web y sistemas que trabajan para tu negocio.
+            </motion.h1>
 
-              <motion.a
-                href="#portafolio"
-                className="btn-ghost inline-flex items-center gap-2.5 text-white font-semibold
-                  text-[15px] px-7 py-[13px] rounded-xl"
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: .97 }}
-              >
-                <PlayIcon />
-                Ver proyectos
-              </motion.a>
-            </motion.div>
+            <motion.p
+              className="mt-7 max-w-[540px] text-[17px] sm:text-[18px] leading-relaxed text-ink-2"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.18, ease }}
+            >
+              Diseñamos y desarrollamos páginas web, tiendas online y sistemas de
+              gestión a medida. Vos nos contás qué necesita tu negocio; nosotros lo
+              construimos, lo publicamos y lo mantenemos funcionando.
+            </motion.p>
 
-            {/* Trust strip */}
             <motion.div
-              className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-2"
-              initial={{ opacity: 0 }}
-              animate={contentVisible ? { opacity: 1 } : {}}
-              transition={{ delay: .55, duration: .6 }}
+              className="mt-9 flex flex-wrap gap-3"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.28, ease }}
             >
-              <span className="text-white/40 text-xs font-medium">+50 proyectos entregados</span>
-              <span className="text-white/15">·</span>
-              <span className="text-white/40 text-xs font-medium">Atención directa por WhatsApp</span>
-              <span className="text-white/15">·</span>
-              <span className="text-white/40 text-xs font-medium">Precios en Guaraníes o USD</span>
+              <a href="#planes" className="btn btn-ink">
+                Ver planes y precios
+              </a>
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                Hablar por WhatsApp
+              </a>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* ── RIGHT — logo showcase ── */}
+          {/* ── Latest project ── */}
           <motion.div
-            className="flex items-center justify-center order-1 lg:order-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: .4 }}
+            className="lg:col-span-5"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.3, ease }}
           >
-            <HeroLogoShowcase introComplete={introComplete} />
+            <a
+              href="https://sistema-fortaleza.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block"
+            >
+              <div className="rounded-xl border border-line bg-white overflow-hidden shadow-[0_18px_50px_-24px_rgba(15,27,45,.35)] transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                <div className="flex items-center gap-1.5 px-3 h-8 border-b border-line bg-paper-2/60">
+                  <span className="w-2 h-2 rounded-full bg-ink/15" />
+                  <span className="w-2 h-2 rounded-full bg-ink/15" />
+                  <span className="w-2 h-2 rounded-full bg-ink/15" />
+                  <span className="ml-3 h-4 flex-1 max-w-[180px] rounded-full bg-ink/[.06]" />
+                </div>
+                <div className="relative aspect-[16/10]">
+                  <FortalezaMockup />
+                </div>
+              </div>
+              <div className="mt-4 flex items-baseline justify-between gap-4">
+                <div>
+                  <p className="eyebrow mb-1">Último lanzamiento</p>
+                  <p className="text-[15px] text-ink font-medium">
+                    Sistema Fortaleza — reservas online de cancha y quincho
+                  </p>
+                </div>
+                <span className="text-[13px] text-ink-2 group-hover:text-ink transition-colors whitespace-nowrap">
+                  Ver sitio ↗
+                </span>
+              </div>
+            </a>
           </motion.div>
         </div>
+
+        {/* ── Facts ── */}
+        <motion.ul
+          className="grid grid-cols-2 lg:grid-cols-4 border-t border-line"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          {FACTS.map((f, i) => (
+            <li
+              key={f}
+              className={[
+                "py-5 text-[14px] text-ink-2",
+                i % 2 === 1 ? "pl-5 border-l border-line" : "pr-5",
+                i >= 2 ? "border-t border-line lg:border-t-0" : "",
+                i === 2 ? "lg:pl-5 lg:border-l" : "",
+                i === 3 ? "lg:pl-5" : "",
+              ].join(" ")}
+            >
+              {f}
+            </li>
+          ))}
+        </motion.ul>
       </div>
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 inset-x-0 h-16 pointer-events-none
-        bg-gradient-to-t from-brand-dark to-transparent" />
     </section>
-  );
-}
-
-/* ── Icons ── */
-function BoltIcon() {
-  return (
-    <svg className="w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2}
-        d="M13 10V3L4 14h7v7l9-11h-7z" />
-    </svg>
-  );
-}
-function PlayIcon() {
-  return (
-    <svg className="w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
   );
 }

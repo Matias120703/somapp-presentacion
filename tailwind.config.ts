@@ -9,19 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "brand-blue":    "#2F7DF6",
-        "brand-blue-2":  "#1955D8",
-        "brand-dark":    "#050B14",
-        "brand-surface": "#0B1320",
+        paper:    "#F6F4EF",
+        "paper-2": "#ECE9E1",
+        ink:      "#0F1B2D",
+        "ink-2":  "#55606F",
+        line:     "rgba(15, 27, 45, 0.12)",
+        accent:   "#1F5FE0",
       },
-      animation: {
-        "float": "floatY 6s ease-in-out infinite",
+      fontFamily: {
+        sans:    ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
       },
-      keyframes: {
-        floatY: {
-          "0%, 100%": { transform: "translateY(0px)"   },
-          "50%":       { transform: "translateY(-20px)" },
-        },
+      maxWidth: {
+        site: "1180px",
       },
     },
   },

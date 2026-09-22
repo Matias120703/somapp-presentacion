@@ -1,21 +1,21 @@
-import Navbar          from "@/components/Navbar";
+import Navbar           from "@/components/Navbar";
 import HeroSection      from "@/components/HeroSection";
-import PricingSection   from "@/components/PricingSection";
 import PortfolioSection from "@/components/PortfolioSection";
+import ServicesSection  from "@/components/ServicesSection";
 import ProcessSection   from "@/components/ProcessSection";
+import PricingSection   from "@/components/PricingSection";
 import ContactSection   from "@/components/ContactSection";
 import Footer           from "@/components/Footer";
-import PageLoaderClient from "@/components/PageLoaderClient";
 
 export default function Home() {
   return (
-    <main className="relative bg-brand-dark overflow-hidden">
-      <PageLoaderClient />
+    <main className="relative bg-paper">
       <Navbar />
       <HeroSection />
-      <PricingSection />
       <PortfolioSection />
+      <ServicesSection />
       <ProcessSection />
+      <PricingSection />
       <ContactSection />
       <Footer />
     </main>
