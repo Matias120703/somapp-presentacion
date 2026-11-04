@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MovaMockup } from "./ProjectMockups";
+import { BrowserShot } from "./PortfolioSection";
 import { WA_URL } from "@/lib/whatsapp";
 
 const FACTS = [
@@ -73,27 +73,19 @@ export default function HeroSection() {
             transition={{ duration: 0.85, delay: 0.3, ease }}
           >
             <a
-              href="https://mova-tienda-online.vercel.app/"
+              href="https://gestion-financiera-wheat.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="group block"
             >
               <div className="rounded-xl border border-line bg-white overflow-hidden shadow-[0_18px_50px_-24px_rgba(15,27,45,.35)] transition-transform duration-500 ease-out group-hover:-translate-y-1">
-                <div className="flex items-center gap-1.5 px-3 h-8 border-b border-line bg-paper-2/60">
-                  <span className="w-2 h-2 rounded-full bg-ink/15" />
-                  <span className="w-2 h-2 rounded-full bg-ink/15" />
-                  <span className="w-2 h-2 rounded-full bg-ink/15" />
-                  <span className="ml-3 h-4 flex-1 max-w-[180px] rounded-full bg-ink/[.06]" />
-                </div>
-                <div className="relative aspect-[16/10]">
-                  <MovaMockup />
-                </div>
+                <BrowserShot src="/proyectos/orden.png" alt="Página de Orden" priority />
               </div>
               <div className="mt-4 flex items-baseline justify-between gap-4">
                 <div>
                   <p className="eyebrow mb-1">Proyecto destacado</p>
                   <p className="text-[15px] text-ink font-medium">
-                    Mova Importados — tienda online de perfumes y skincare
+                    Orden — gestión financiera para negocios y profesionales
                   </p>
                 </div>
                 <span className="text-[13px] text-ink-2 group-hover:text-ink transition-colors whitespace-nowrap">
