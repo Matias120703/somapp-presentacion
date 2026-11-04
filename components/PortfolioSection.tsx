@@ -3,18 +3,9 @@ import {
   ZurikMockup,
   MovaMockup,
   RestauranteMockup,
-  FortalezaMockup,
 } from "./ProjectMockups";
 
 const PROJECTS = [
-  {
-    id: "fortaleza",
-    title: "Sistema Fortaleza",
-    kind: "Sistema de reservas",
-    desc: "Reservas online de cancha sintética, parrilla y eventos, con disponibilidad en tiempo real y código de seguimiento.",
-    url: "https://sistema-fortaleza.vercel.app/",
-    Mockup: FortalezaMockup,
-  },
   {
     id: "mova",
     title: "Mova Importados",

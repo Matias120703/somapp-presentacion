@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FortalezaMockup } from "./ProjectMockups";
+import { MovaMockup } from "./ProjectMockups";
 import { WA_URL } from "@/lib/whatsapp";
 
 const FACTS = [
   "+50 proyectos entregados",
   "Atención directa por WhatsApp",
-  "Hosting y soporte incluidos",
+  "Hosting y soporte en la mensualidad",
   "Precios en Gs. y USD",
 ];
 
@@ -65,7 +65,7 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* ── Latest project ── */}
+          {/* ── Featured project ── */}
           <motion.div
             className="lg:col-span-5"
             initial={{ opacity: 0, y: 24 }}
@@ -73,7 +73,7 @@ export default function HeroSection() {
             transition={{ duration: 0.85, delay: 0.3, ease }}
           >
             <a
-              href="https://sistema-fortaleza.vercel.app/"
+              href="https://mova-tienda-online.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="group block"
@@ -86,14 +86,14 @@ export default function HeroSection() {
                   <span className="ml-3 h-4 flex-1 max-w-[180px] rounded-full bg-ink/[.06]" />
                 </div>
                 <div className="relative aspect-[16/10]">
-                  <FortalezaMockup />
+                  <MovaMockup />
                 </div>
               </div>
               <div className="mt-4 flex items-baseline justify-between gap-4">
                 <div>
-                  <p className="eyebrow mb-1">Último lanzamiento</p>
+                  <p className="eyebrow mb-1">Proyecto destacado</p>
                   <p className="text-[15px] text-ink font-medium">
-                    Sistema Fortaleza — reservas online de cancha y quincho
+                    Mova Importados — tienda online de perfumes y skincare
                   </p>
                 </div>
                 <span className="text-[13px] text-ink-2 group-hover:text-ink transition-colors whitespace-nowrap">

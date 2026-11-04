@@ -16,13 +16,14 @@ const PLANS = [
     featured: false,
     title: "Landing page profesional",
     lead: "Para presentar tu negocio y empezar a recibir consultas.",
-    prices: { PYG: "Gs. 650.000", USD: "USD 115" },
+    priceLabel: "",
+    prices: { PYG: "Gs. 1.150.000", USD: "USD 200" },
+    monthly: { PYG: "Gs. 150.000 a 200.000", USD: "USD 26 a 35" },
     features: [
       "Diseño a medida y responsive",
       "WhatsApp integrado",
       "Formulario de contacto",
       "SEO básico",
-      "Hosting por 6 meses",
     ],
   },
   {
@@ -31,7 +32,9 @@ const PLANS = [
     featured: true,
     title: "Sitio web + panel administrativo",
     lead: "Para manejar contenido y productos por tu cuenta.",
-    prices: { PYG: "Gs. 1.990.000", USD: "USD 345" },
+    priceLabel: "Precio base",
+    prices: { PYG: "Gs. 3.475.000", USD: "USD 600" },
+    monthly: { PYG: "Gs. 645.000", USD: "USD 112" },
     features: [
       "Todo lo del plan Básico",
       "Panel de administración",
@@ -42,9 +45,13 @@ const PLANS = [
   },
 ];
 
+const PAYMENT_NOTE =
+  "Para comenzar se abona el 50% del desarrollo junto con la primera mensualidad.";
+
 const NOTE =
-  "Son precios base: el costo final se ajusta según las funcionalidades que necesite tu proyecto. " +
-  "Los sistemas a medida (tiendas, reservas, gestión) se cotizan según alcance. Dominio no incluido.";
+  "El plan Profesional parte de un precio base: el costo final y la mensualidad se ajustan según lo que " +
+  "necesite tu proyecto. Los sistemas más complejos, como pagos online o pedidos por QR desde la mesa con " +
+  "aviso a cocina, se cotizan aparte según alcance. Dominio no incluido.";
 
 export default function PricingSection() {
   const [currency, setCurrency] = useState<Currency>("PYG");
@@ -75,9 +82,10 @@ export default function PricingSection() {
         </div>
 
         <Reveal className="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
-          <p className="md:col-start-5 md:col-span-8 text-[14px] leading-relaxed text-ink-2 max-w-[640px]">
-            {NOTE}
-          </p>
+          <div className="md:col-start-5 md:col-span-8 max-w-[640px] space-y-2">
+            <p className="text-[15px] leading-relaxed text-ink">{PAYMENT_NOTE}</p>
+            <p className="text-[14px] leading-relaxed text-ink-2">{NOTE}</p>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -88,6 +96,7 @@ export default function PricingSection() {
 function PlanCard({ plan, currency }: { plan: (typeof PLANS)[number]; currency: Currency }) {
   const dark = plan.featured;
   const price = plan.prices[currency];
+  const monthly = plan.monthly[currency];
 
   return (
     <div
@@ -109,10 +118,12 @@ function PlanCard({ plan, currency }: { plan: (typeof PLANS)[number]; currency: 
         {plan.lead}
       </p>
 
-      <div className="mt-7 flex items-baseline gap-2">
-        <span className={`text-[12px] tracking-[.14em] uppercase ${dark ? "text-paper/55" : "text-ink-2"}`}>
-          Desde
-        </span>
+      <div className="mt-7 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        {plan.priceLabel && (
+          <span className={`text-[12px] tracking-[.14em] uppercase ${dark ? "text-paper/55" : "text-ink-2"}`}>
+            {plan.priceLabel}
+          </span>
+        )}
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={price}
@@ -126,6 +137,10 @@ function PlanCard({ plan, currency }: { plan: (typeof PLANS)[number]; currency: 
           </motion.span>
         </AnimatePresence>
       </div>
+      <p className={`mt-3 text-[15px] ${dark ? "text-paper/75" : "text-ink-2"}`}>
+        + {monthly} por mes
+        <span className={dark ? "text-paper/50" : "text-ink-2/70"}> · hosting, soporte y mantenimiento</span>
+      </p>
 
       <div className={`my-7 h-px ${dark ? "bg-paper/15" : "bg-line"}`} />
 
