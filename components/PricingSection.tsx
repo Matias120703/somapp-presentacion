@@ -17,7 +17,7 @@ const PLANS = [
     title: "Landing page profesional",
     lead: "Para presentar tu negocio y empezar a recibir consultas.",
     priceLabel: "",
-    prices: { PYG: "Gs. 1.150.000", USD: "USD 200" },
+    prices: { PYG: "Gs. 1.150.000", USD: "USD 225" },
     monthly: { PYG: "Gs. 150.000 a 200.000", USD: "USD 26 a 35" },
     features: [
       "Diseño a medida y responsive",
@@ -33,7 +33,7 @@ const PLANS = [
     title: "Sitio web + panel administrativo",
     lead: "Para manejar contenido y productos por tu cuenta.",
     priceLabel: "Precio base",
-    prices: { PYG: "Gs. 3.475.000", USD: "USD 600" },
+    prices: { PYG: "Gs. 3.475.000", USD: "USD 635" },
     monthly: { PYG: "Gs. 645.000", USD: "USD 112" },
     features: [
       "Todo lo del plan Básico",
