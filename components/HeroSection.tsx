@@ -8,7 +8,7 @@ const FACTS = [
   "+50 proyectos entregados",
   "Atención directa por WhatsApp",
   "Hosting y soporte en la mensualidad",
-  "Precios en Gs. y USD",
+  "Presupuesto según tu proyecto",
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -56,8 +56,8 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.28, ease }}
             >
-              <a href="#planes" className="btn btn-ink">
-                Ver planes y precios
+              <a href="#presupuesto" className="btn btn-ink">
+                Pedir presupuesto
               </a>
               <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
                 Hablar por WhatsApp
