@@ -16,7 +16,6 @@ const SERVICIOS = [
 ];
 
 const RANGOS = [
-  "Hasta Gs. 1.500.000",
   "Gs. 1.500.000 a 3.000.000",
   "Gs. 3.000.000 a 6.000.000",
   "Gs. 6.000.000 a 12.000.000",
@@ -86,13 +85,12 @@ function Chip({
 }
 
 export default function BudgetSection() {
-  const [nombre, setNombre] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
   const [negocio, setNegocio] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [redes, setRedes] = useState("");
   const [rubro, setRubro] = useState("");
   const [servicios, setServicios] = useState<string[]>([]);
+  const [otro, setOtro] = useState("");
   const [rango, setRango] = useState("");
   const [plazo, setPlazo] = useState("");
   const [comentario, setComentario] = useState("");
@@ -104,10 +102,9 @@ export default function BudgetSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const falta =
-      (!nombre.trim() && "Falta tu nombre.") ||
-      (whatsapp.replace(/\D/g, "").length < 6 && "Falta un WhatsApp válido.") ||
       (!negocio.trim() && "Falta el nombre de tu negocio.") ||
       (!servicios.length && "Elegí al menos un servicio.") ||
+      (servicios.includes("Otro") && !otro.trim() && "Contanos tu idea en la opción Otro.") ||
       (!rango && "Elegí cuánto querés invertir.") ||
       "";
     setError(falta);
@@ -116,11 +113,9 @@ export default function BudgetSection() {
     const lineas = [
       "Hola, completé el formulario de presupuesto en la web de Somapp.",
       "",
-      `Nombre: ${nombre.trim()}`,
-      `WhatsApp: ${whatsapp.trim()}`,
       `Negocio: ${negocio.trim()}${ciudad.trim() ? ` (${ciudad.trim()})` : ""}${redes.trim() ? ` · ${redes.trim()}` : ""}`,
       rubro.trim() ? `A qué se dedica: ${rubro.trim()}` : null,
-      `Me interesa: ${servicios.join(", ")}`,
+      `Me interesa: ${servicios.map((s) => (s === "Otro" ? `Otro (${otro.trim()})` : s)).join(", ")}`,
       `Puedo invertir: ${rango}`,
       plazo ? `Para cuándo: ${plazo}` : null,
       comentario.trim() ? `Comentario: ${comentario.trim()}` : null,
@@ -149,20 +144,7 @@ export default function BudgetSection() {
 
           <Reveal className="lg:col-span-8" delay={0.08}>
             <form onSubmit={handleSubmit} noValidate className="rounded-xl border border-line bg-paper-2/40 p-6 sm:p-10">
-              <Group n="01" title="Tus datos">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="p-nombre">Nombre y apellido</Label>
-                    <input id="p-nombre" className={fieldClass} maxLength={60} autoComplete="name" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-                  </div>
-                  <div>
-                    <Label htmlFor="p-whatsapp">WhatsApp</Label>
-                    <input id="p-whatsapp" type="tel" className={fieldClass} maxLength={25} autoComplete="tel" placeholder="0981 123 456" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
-                  </div>
-                </div>
-              </Group>
-
-              <Group n="02" title="Tu negocio">
+              <Group n="01" title="Tu negocio">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="p-negocio">Nombre del negocio</Label>
@@ -191,16 +173,31 @@ export default function BudgetSection() {
                 </div>
               </Group>
 
-              <Group n="03" title="¿Qué te interesa?">
+              <Group n="02" title="¿Qué te interesa?">
                 <p className="-mt-2 mb-4 text-[14px] text-ink-2">Podés elegir más de uno.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {SERVICIOS.map((s) => (
                     <Chip key={s} type="checkbox" name="servicios" value={s} checked={servicios.includes(s)} onChange={() => toggleServicio(s)} />
                   ))}
                 </div>
+                {servicios.includes("Otro") && (
+                  <div className="mt-4">
+                    <Label htmlFor="p-otro">¿Cuál es tu idea?</Label>
+                    <textarea
+                      id="p-otro"
+                      className={`${fieldClass} h-auto py-3 resize-none`}
+                      rows={3}
+                      maxLength={400}
+                      autoFocus
+                      placeholder="Contanos con tus palabras qué te gustaría tener"
+                      value={otro}
+                      onChange={(e) => setOtro(e.target.value)}
+                    />
+                  </div>
+                )}
               </Group>
 
-              <Group n="04" title="¿Cuánto querés invertir?">
+              <Group n="03" title="¿Cuánto querés invertir?">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {RANGOS.map((r) => (
                     <Chip key={r} type="radio" name="rango" value={r} checked={rango === r} onChange={() => setRango(r)} />
@@ -208,7 +205,7 @@ export default function BudgetSection() {
                 </div>
               </Group>
 
-              <Group n="05" title="¿Para cuándo lo necesitás?">
+              <Group n="04" title="¿Para cuándo lo necesitás?">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {PLAZOS.map((p) => (
                     <Chip key={p} type="radio" name="plazo" value={p} checked={plazo === p} onChange={() => setPlazo(p)} />

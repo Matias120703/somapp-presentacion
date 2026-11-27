@@ -3,8 +3,8 @@ import Reveal from "./ui/Reveal";
 const STEPS = [
   {
     n: "1",
-    title: "Reunión inicial",
-    text: "Hablamos por WhatsApp o videollamada. Entendemos qué hace tu negocio y qué necesitás resolver.",
+    title: "Cuestionario",
+    text: "Completás el cuestionario de presupuesto en dos minutos. Así entendemos qué hace tu negocio y qué necesitás resolver.",
   },
   {
     n: "2",
@@ -24,7 +24,7 @@ const STEPS = [
   {
     n: "5",
     title: "Lanzamiento y soporte",
-    text: "Lo publicamos con hosting incluido y te acompañamos durante los primeros 6 meses.",
+    text: "Lo publicamos y lo mantenemos funcionando: hosting, soporte y ajustes van en la mensualidad.",
   },
 ];
 
