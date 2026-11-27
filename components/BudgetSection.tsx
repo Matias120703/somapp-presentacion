@@ -85,6 +85,7 @@ function Chip({
 }
 
 export default function BudgetSection() {
+  const [nombre, setNombre] = useState("");
   const [negocio, setNegocio] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [redes, setRedes] = useState("");
@@ -110,15 +111,25 @@ export default function BudgetSection() {
     setError(falta);
     if (falta) return;
 
+    const quien = nombre.trim()
+      ? `Soy ${nombre.trim()}, de ${negocio.trim()}.`
+      : `Te escribo de ${negocio.trim()}.`;
+
     const lineas = [
-      "Hola, completé el formulario de presupuesto en la web de Somapp.",
+      `Hola Matías, ¿cómo estás? ${quien}`,
+      "Completé el formulario de presupuesto en la web de Somapp y te paso mis respuestas:",
       "",
-      `Negocio: ${negocio.trim()}${ciudad.trim() ? ` (${ciudad.trim()})` : ""}${redes.trim() ? ` · ${redes.trim()}` : ""}`,
-      rubro.trim() ? `A qué se dedica: ${rubro.trim()}` : null,
-      `Me interesa: ${servicios.map((s) => (s === "Otro" ? `Otro (${otro.trim()})` : s)).join(", ")}`,
-      `Puedo invertir: ${rango}`,
-      plazo ? `Para cuándo: ${plazo}` : null,
-      comentario.trim() ? `Comentario: ${comentario.trim()}` : null,
+      `*Negocio:* ${negocio.trim()}`,
+      nombre.trim() ? `*Nombre:* ${nombre.trim()}` : null,
+      ciudad.trim() ? `*Ciudad:* ${ciudad.trim()}` : null,
+      redes.trim() ? `*Instagram o web:* ${redes.trim()}` : null,
+      rubro.trim() ? `*A qué se dedica:* ${rubro.trim()}` : null,
+      `*Me interesa:* ${servicios.map((s) => (s === "Otro" ? `Otro (${otro.trim()})` : s)).join(", ")}`,
+      `*Presupuesto:* ${rango}`,
+      plazo ? `*Para cuándo:* ${plazo}` : null,
+      comentario.trim() ? `*Comentario:* ${comentario.trim()}` : null,
+      "",
+      "¡Gracias!",
     ].filter((l) => l !== null);
 
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(lineas.join("\n"))}`;
@@ -147,6 +158,10 @@ export default function BudgetSection() {
               <Group n="01" title="Tu negocio">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
+                    <Label htmlFor="p-nombre" optional>Tu nombre</Label>
+                    <input id="p-nombre" className={fieldClass} maxLength={60} autoComplete="given-name" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                  </div>
+                  <div>
                     <Label htmlFor="p-negocio">Nombre del negocio</Label>
                     <input id="p-negocio" className={fieldClass} maxLength={80} value={negocio} onChange={(e) => setNegocio(e.target.value)} />
                   </div>
@@ -154,7 +169,7 @@ export default function BudgetSection() {
                     <Label htmlFor="p-ciudad" optional>Ciudad</Label>
                     <input id="p-ciudad" className={fieldClass} maxLength={60} value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
                   </div>
-                  <div className="sm:col-span-2">
+                  <div>
                     <Label htmlFor="p-redes" optional>Instagram o página web</Label>
                     <input id="p-redes" className={fieldClass} maxLength={120} placeholder="@tunegocio" value={redes} onChange={(e) => setRedes(e.target.value)} />
                   </div>
